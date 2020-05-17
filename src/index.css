@@ -5,6 +5,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #303030 !important;
   font-size:10px !important;
+  background-image:url('./components/icons/ithrone.png') !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: 100% 90% !important;
 }
 
 code {
@@ -14,6 +18,10 @@ code {
 @font-face {
   font-family: 'Game of Thrones';
   src:local("Game of Thrones"), url("./components/themes/Game of Thrones.ttf") format('truetype');
+}
+.cardIcon{
+  width:25px;
+  length: 20px
 }
 .dropdown{
   font-size:10px !important;
