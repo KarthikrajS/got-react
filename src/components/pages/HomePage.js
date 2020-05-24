@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Card, CardColumns, CardDeck, CardGroup, Col,Row} from 'react-bootstrap'
 import TopNavigation from "../Navigation/TopNavigation";
-import {battleBasedOnLocation} from '../actions/battleData';
+import {battleBasedOnLocation,battleBasedOnTypes,battleBasedOnKings,search} from '../actions/battleData';
 import {Link} from 'react-router-dom';
 import attack from '../icons/attack.png';
 import defend from '../icons/defend.png';
@@ -15,24 +15,78 @@ class HomePage extends React.Component {
         location:null,
         isLoading :false,
         battles:[],
+        king:null,
+        type:null,
+        searchBattle:[]
     }
 
     componentWillMount() {
-        if (JSON.parse(localStorage.getItem("location")) === null){
-            this.setState({location:null})
-        }
-        this.setState(prevState=>({
-            location: prevState.location
-        }))
+        // if (JSON.parse(localStorage.getItem("location")) === null){
+             this.setState({location:null})
+        // }
+        // if (JSON.parse(localStorage.getItem("king")) === null){
+            this.setState({king:null})
+        // }
+        // if (JSON.parse(localStorage.getItem("location")) === null){
+            this.setState({type:null})
+            console.log(this.state.searchBattle)
+        //}
+        // this.setState(prevState=>({
+        //     location: prevState.location
+        // }))
+
     }
 
     componentDidUpdate(){
-
+        this.setState({seachBattle: []})
+        this.updateState()
+                const  params = new URLSearchParams(window.location.search)
+                if(this.state.isLoading===true && (params.has('king'))){
+                    this.updateState()
+                   if(params.has('type') && params.has('location')){
+                       this.props.search({king:params.get('king'),type:params.get('type'),location:params.get('location')}).then(battles=>{
+                           this.setState({searchBattle:battles})
+                       })
+                   }else{
+                       this.props.search({king:params.get('king')}).then(battles=>{
+                           this.setState({searchBattle:battles})
+                       })
+                   }
+                    localStorage.removeItem('king')
+                    localStorage.removeItem('type')
+                    localStorage.removeItem('location')
+                    this.updateState()
+                }
                 if (this.state.isLoading===true && JSON.parse(localStorage.getItem("location")) !== null) {
-                    console.log(localStorage.getItem("location"))
+
                     this.props.battleBasedOnLocation(JSON.parse(localStorage.getItem("location")))
                         .then(battles => {
                             this.setState({battles: battles, location: JSON.parse(localStorage.getItem("location"))})
+                        })
+                    this.updateState()
+                }
+                if (this.state.isLoading===true && JSON.parse(localStorage.getItem("type")) !== null) {
+
+                    this.props.battleBasedOnTypes(JSON.parse(localStorage.getItem("type")))
+                        .then(battles => {
+                            this.setState({battles: battles, type: JSON.parse(localStorage.getItem("type"))})
+                        })
+                    this.updateState()
+                }
+
+                if (this.state.isLoading===true && JSON.parse(localStorage.getItem("king")) !== null) {
+
+                    this.props.battleBasedOnKings(JSON.parse(localStorage.getItem("king")))
+                        .then(battles => {
+                            this.setState({battles: battles, king: JSON.parse(localStorage.getItem("king"))})
+                        })
+                    this.updateState()
+                }
+                if (this.state.isLoading===true && JSON.parse(localStorage.getItem("type")) !== null) {
+
+                    this.props.battleBasedOnTypes(JSON.parse(localStorage.getItem("type")))
+                        .then(battles => {
+                            this.setState({battles: battles, location: JSON.parse(localStorage.getItem("type"))})
                         })
                     this.updateState()
                 }
@@ -45,7 +99,7 @@ class HomePage extends React.Component {
         var html=[]
         battles.forEach(battle=>{
             html.push(
-                <Link to={"/battleDetail/"+battle.name} >
+                <Link to={"/battleDetail/?battleName="+battle.name} >
                 <Card bg="dark" text="white"  style={{"width": "100%"}} className="text-center p-3">
                     <Card.Title>{battle.name}</Card.Title>
                     <Card.Subtitle>{battle.region}</Card.Subtitle>
@@ -70,8 +124,8 @@ class HomePage extends React.Component {
         return html;
     }
     render() {
-        const {isLocation} = this.props
-        const {location,battles} = this.state
+        const {isLocation,isSearchBattle} = this.props
+        const {location,battles,king,type,searchBattle} = this.state
         return (
 
             <div>
@@ -79,7 +133,10 @@ class HomePage extends React.Component {
                 <div  className="ui container " >
                 <br/>
                 {
-                    (JSON.parse(localStorage.getItem("location")) === null || location === null) &&
+                    (JSON.parse(localStorage.getItem("location")) === null || location === null)
+                    &&  (JSON.parse(localStorage.getItem("type")) === null &&  type === null)
+                    &&  (JSON.parse(localStorage.getItem("king")) === null &&  king === null)
+                    && isSearchBattle &&
                     <div style={{"margin-left":"50%"}}>
                     <CardGroup>
                         <CardDeck style={{"font-family": "Game of Thrones"}} >
@@ -132,6 +189,39 @@ class HomePage extends React.Component {
                         </CardGroup>
                     </div>
                 }
+                    {!isSearchBattle
+                    &&
+                    <CardGroup>
+                        <CardDeck style={{"font-family": "Game of Thrones"}} >
+                            <CardColumns>
+                                {this.createBattleCards(searchBattle)}
+                            </CardColumns>
+                        </CardDeck>
+                    </CardGroup>}
+                    {console.log((JSON.parse(localStorage.getItem("king")) !== null &&  king !== null))}
+                    {
+
+                        (JSON.parse(localStorage.getItem("king")) !== null &&  king !== null) && <div>
+                            <CardGroup>
+                                <CardDeck style={{"font-family": "Game of Thrones"}} >
+                                    <CardColumns>
+                                        {this.createBattleCards(battles)}
+                                    </CardColumns>
+                                </CardDeck>
+                            </CardGroup>
+                        </div>
+                    }
+                    {
+                        (JSON.parse(localStorage.getItem("type")) !== null &&  type !== null) && <div>
+                            <CardGroup>
+                                <CardDeck style={{"font-family": "Game of Thrones"}} >
+                                    <CardColumns>
+                                        {this.createBattleCards(battles)}
+                                    </CardColumns>
+                                </CardDeck>
+                            </CardGroup>
+                        </div>
+                    }
                 </div>
             </div>)
     }
@@ -140,16 +230,21 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
     isLocation: PropTypes.bool.isRequired,
-    battleBasedOnLocation: PropTypes.func.isRequired
+    battleBasedOnLocation: PropTypes.func.isRequired,
+    battleBasedOnKings: PropTypes.func.isRequired,
+    battleBasedOnTypes: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
+    isSearchBattle: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
     return {
         isLocation: !!state.location,
+        isSearchBattle : !! state.searchBattle
 
         // userType:decode(localStorage.iotJWT).userType
     }
 }
 
 
-export default connect(mapStateToProps,{battleBasedOnLocation})(HomePage)
+export default connect(mapStateToProps,{battleBasedOnLocation,battleBasedOnKings,battleBasedOnTypes,search})(HomePage)

@@ -24,9 +24,17 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.cardWidth{
+  width:250% !important;
+}
 .App-link {
   color: #61dafb;
+}
+.noSecBar{
+  display: none;
+}
+.yesSecBar{
+  display: block;
 }
 
 @keyframes App-logo-spin {
