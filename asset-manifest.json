@@ -6,14 +6,14 @@
     "runtime-main.js": "/got-react/static/js/runtime-main.d46fb3b2.js",
     "runtime-main.js.map": "/got-react/static/js/runtime-main.d46fb3b2.js.map",
     "static/css/2.61eee8ff.chunk.css": "/got-react/static/css/2.61eee8ff.chunk.css",
-    "static/js/2.01016266.chunk.js": "/got-react/static/js/2.01016266.chunk.js",
-    "static/js/2.01016266.chunk.js.map": "/got-react/static/js/2.01016266.chunk.js.map",
+    "static/js/2.0d08ad30.chunk.js": "/got-react/static/js/2.0d08ad30.chunk.js",
+    "static/js/2.0d08ad30.chunk.js.map": "/got-react/static/js/2.0d08ad30.chunk.js.map",
     "index.html": "/got-react/index.html",
-    "precache-manifest.b083825fc19ecb69bc6311f0373c9d0c.js": "/got-react/precache-manifest.b083825fc19ecb69bc6311f0373c9d0c.js",
+    "precache-manifest.7a270506ad89fb6ccb0fc51055f519be.js": "/got-react/precache-manifest.7a270506ad89fb6ccb0fc51055f519be.js",
     "service-worker.js": "/got-react/service-worker.js",
     "static/css/2.61eee8ff.chunk.css.map": "/got-react/static/css/2.61eee8ff.chunk.css.map",
     "static/css/main.0262cf84.chunk.css.map": "/got-react/static/css/main.0262cf84.chunk.css.map",
-    "static/js/2.01016266.chunk.js.LICENSE.txt": "/got-react/static/js/2.01016266.chunk.js.LICENSE.txt",
+    "static/js/2.0d08ad30.chunk.js.LICENSE.txt": "/got-react/static/js/2.0d08ad30.chunk.js.LICENSE.txt",
     "static/media/index.css": "/got-react/static/media/ithrone.b118c3d7.png",
     "static/media/semantic.min.css": "/got-react/static/media/outline-icons.ef60a4f6.woff",
     "static/media/brotherhood.PNG": "/got-react/static/media/brotherhood.25907f46.PNG",
@@ -27,7 +27,7 @@
   "entrypoints": [
     "static/js/runtime-main.d46fb3b2.js",
     "static/css/2.61eee8ff.chunk.css",
-    "static/js/2.01016266.chunk.js",
+    "static/js/2.0d08ad30.chunk.js",
     "static/css/main.0262cf84.chunk.css",
     "static/js/main.4d7fbdba.chunk.js"
   ]
