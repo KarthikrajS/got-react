@@ -16,7 +16,7 @@ const App =() => {
 
             <container>
                 <div>
-                    <Route path="/" exact component={HomePage}/>
+                    <Route path="/got-react" exact component={HomePage}/>
                     <Route path="/battleDetail" exact component={BattleDetailsPage}/>
                 </div>
             </container>
