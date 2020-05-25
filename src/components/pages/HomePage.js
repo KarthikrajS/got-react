@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Card, CardColumns, CardDeck, CardGroup, Col,Row} from 'react-bootstrap'
+import {Card, CardColumns, CardDeck, CardGroup, Col,Row,Container} from 'react-bootstrap'
 import TopNavigation from "../Navigation/TopNavigation";
 import {battleBasedOnLocation,battleBasedOnTypes,battleBasedOnKings,search} from '../actions/battleData';
 import {Link} from 'react-router-dom';
@@ -38,27 +38,31 @@ class HomePage extends React.Component {
     }
 
     componentDidUpdate(){
-        this.setState({seachBattle: []})
-        this.updateState()
+
                 const  params = new URLSearchParams(window.location.search)
                 if(this.state.isLoading===true && (params.has('king'))){
                     this.updateState()
+                    console.log("url")
                    if(params.has('type') && params.has('location')){
                        this.props.search({king:params.get('king'),type:params.get('type'),location:params.get('location')}).then(battles=>{
                            this.setState({searchBattle:battles})
+                           localStorage.setItem('searchBattle',battles)
                        })
                    }else{
                        this.props.search({king:params.get('king')}).then(battles=>{
                            this.setState({searchBattle:battles})
+                           localStorage.setItem('searchBattle',battles)
                        })
+
                    }
                     localStorage.removeItem('king')
                     localStorage.removeItem('type')
                     localStorage.removeItem('location')
                     this.updateState()
+                    console.log(this.props.isSearchBattle)
                 }
                 if (this.state.isLoading===true && JSON.parse(localStorage.getItem("location")) !== null) {
-
+                   this.setState({searchBattle: []})
                     this.props.battleBasedOnLocation(JSON.parse(localStorage.getItem("location")))
                         .then(battles => {
                             this.setState({battles: battles, location: JSON.parse(localStorage.getItem("location"))})
@@ -130,18 +134,21 @@ class HomePage extends React.Component {
 
             <div>
                 <TopNavigation updateParent={this.updateState.bind(this)}/>
-                <div  className="ui container " >
+                <div  className="ui container " style={{"width":"800px"}}>
+
                 <br/>
                 {
-                    (JSON.parse(localStorage.getItem("location")) === null || location === null)
+
+                    (JSON.parse(localStorage.getItem("location")) === null && location === null)
                     &&  (JSON.parse(localStorage.getItem("type")) === null &&  type === null)
                     &&  (JSON.parse(localStorage.getItem("king")) === null &&  king === null)
-                    && isSearchBattle &&
-                    <div style={{"margin-left":"50%"}}>
+                    &&
+                    <div >
+                        <Container >
                     <CardGroup>
                         <CardDeck style={{"font-family": "Game of Thrones"}} >
                             <CardColumns>
-                                <Card bg="dark" text="white" style={{"width": "250%"}} className="text-center p-3">
+                                <Card style={{"width" : "690px", "height":"125px"}} bg="dark" text="white"  className="text-center p-3">
                                     <Card.Body>
                                         <blockquote className="blockquote mb-0 card-body">
                                             <Card.Text>
@@ -153,7 +160,7 @@ class HomePage extends React.Component {
                             </CardColumns>
                             <CardColumns>
 
-                                <Card style={{"width": "250%"}} bg="danger" text="white" className="text-center p-3">
+                                <Card style={{"width" : "690px", "height":"100px"}}  bg="danger" text="white" className="text-center p-3">
                                     <Card.Body>
                                         <Card.Title>
                                             Game Of Thrones
@@ -162,7 +169,7 @@ class HomePage extends React.Component {
                                 </Card>
                             </CardColumns>
                                 <CardColumns>
-                                    <Card bg="dark" text="white" style={{"width": "250%"}} className="text-center p-3">
+                                    <Card style={{"width" : "690px", "height":"125px"}} bg="dark" text="white"  className="text-center p-3">
                                         <Card.Body>
                                             <blockquote className="blockquote mb-0 card-body">
                                                 <Card.Text>
@@ -172,10 +179,9 @@ class HomePage extends React.Component {
                                         </Card.Body>
                                     </Card>
                                 </CardColumns>
-
-
                         </CardDeck>
                     </CardGroup>
+                        </Container>
                     </div>
                 }
                 {
@@ -189,8 +195,7 @@ class HomePage extends React.Component {
                         </CardGroup>
                     </div>
                 }
-                    {!isSearchBattle
-                    &&
+                    {!isSearchBattle &&
                     <CardGroup>
                         <CardDeck style={{"font-family": "Game of Thrones"}} >
                             <CardColumns>
@@ -240,8 +245,7 @@ HomePage.propTypes = {
 function mapStateToProps(state) {
     return {
         isLocation: !!state.location,
-        isSearchBattle : !! state.searchBattle
-
+        isSearchBattle : !! (state.searchBattle || localStorage.getItem('searchBattle')!=="null")
         // userType:decode(localStorage.iotJWT).userType
     }
 }

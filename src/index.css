@@ -32,3 +32,11 @@ code {
   font-size:10px !important;
   width:30%
 }
+
+@media(max-width: 600px) {
+  body{
+    background-size: 100% 70% ;
+    background-position: center !important;
+  }
+}
+

@@ -45,3 +45,10 @@
     transform: rotate(360deg);
   }
 }
+
+@media(min-width: 320px) {
+  .card-columns .card {
+    width: auto;
+  }
+}
+
