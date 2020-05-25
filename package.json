@@ -2,7 +2,7 @@
   "name": "got-react",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://career-ninja-got.herokuapp.com",
+ 
   "engines": {
     "npm": "6.14.4",
     "node": "12.16.3"
