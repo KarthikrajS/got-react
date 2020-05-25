@@ -2,8 +2,7 @@
   "name": "got-react",
   "version": "0.1.0",
   "private": true,
-  "proxy": {"/api":{
-  "target":"https://career-ninja-got.herokuapp.com"}},
+  "proxy": "https://career-ninja-got.herokuapp.com",
 
   "homepage": "http://KarthikrajS.github.io/got-react",
   "engines": {
