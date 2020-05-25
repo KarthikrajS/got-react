@@ -6,6 +6,7 @@ import HomePage from './components/pages/HomePage'
 import BattleDetailsPage from  './components/pages/BattleDetailsPage';
 import darkTheme from "./components/themes/darkTheme";
 
+
 import TopNavigation from './components/Navigation/TopNavigation'
 
 const App =() => {
