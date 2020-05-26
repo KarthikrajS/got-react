@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import {ThemeProvider} from "styled-components";
 import container from './components/Containers/container.js'
 import HomePage from './components/pages/HomePage'
 import BattleDetailsPage from  './components/pages/BattleDetailsPage';
