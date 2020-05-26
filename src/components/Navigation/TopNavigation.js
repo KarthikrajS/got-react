@@ -191,7 +191,7 @@ class TopNavigation extends React.Component{
                                 onChange={this.handleChange}
                             />}
                         </NavItem>
-
+                        <hr/>
                         <NavItem className="dropdown">
 
                             { !isKings && <Dropdown
