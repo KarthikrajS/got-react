@@ -6,6 +6,5 @@ import battleData from './reducers/battleData'
 export default combineReducers({
   //  user,
    // devices
-    battleData,
-    config
+    battleData
 })
